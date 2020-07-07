@@ -1,17 +1,17 @@
 <template>
-    <div>
-        Money.vue
-    </div>
+  <div>
+    Money.vue
+    <Nav />
+  </div>
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
+import Vue from "vue";
 
-    export default Vue.extend({
-        name:  'Money' 
-    })
+export default {
+  name: "Money"
+};
 </script>
 
 <style scoped>
-
 </style>

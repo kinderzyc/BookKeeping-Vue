@@ -1,17 +1,17 @@
 <template>
-    <div>   
-        Lables.vue
-    </div>
+  <div>
+    Lables.vue
+    <Nav />
+  </div>
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
+import Vue from "vue";
 
-    export default Vue.extend({
-        name: 'Lables'
-    })
+export default {
+  name: "Lables"
+};
 </script>
 
 <style scoped>
-
 </style>

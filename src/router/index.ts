@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router';
 import Money from "@/views/Money.vue";
 import Lables from "@/views/Lables.vue";
 import Statistics from "@/views/Statistics.vue";
+import NotFound from "@/views/NotFound.vue";
 
 Vue.use(VueRouter);
 
@@ -12,16 +13,20 @@ const routes: Array<RouteConfig> = [
     redirect: '/money'
   },
   {
-    path: '/money',
-    component: Money
-  },
-  {
     path: '/lables',
     component: Lables
   },
   {
+    path: '/money',
+    component: Money
+  },
+  {
     path: '/statistics',
     component: Statistics
+  },
+  {
+    path: '*',
+    component: NotFound
   }
 ];
 

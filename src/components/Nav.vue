@@ -1,7 +1,7 @@
 <template>
   <nav>
-    <router-link to="/lables" class="item" active-class="selected">
-      <Icon name="lables" />标签
+    <router-link to="/labels" class="item" active-class="selected">
+      <Icon name="labels" />标签
     </router-link>
     <router-link to="/money" class="item" active-class="selected">
       <Icon name="wallet" />记账

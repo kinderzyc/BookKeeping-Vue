@@ -1,11 +1,11 @@
 <template>
   <Layout>
-    <ol class="tags">
-      <li v-for="tag in tags" :key="tag.id">
+    <div class="tags">
+      <router-link class="tag" v-for="tag in tags" :key="tag.id" :to="`/labels/edit/${tag.id}`">
         <span>{{tag.name}}</span>
         <Icon name="rights" />
-      </li>
-    </ol>
+      </router-link>
+    </div>
     <div class="createTags-wrapper">
       <button class="createTags" @click="createTag">新建标签</button>
     </div>
@@ -45,7 +45,7 @@ export default class Lables extends Vue {
   font-size: 18px;
   margin-top: 20px;
   font-weight: bold;
-  > li {
+  > .tag {
     /* box-shadow: 1px 1px 6px #aaaaaa; */
     border: 1px solid #aaaaaa;
     min-height: 60px;

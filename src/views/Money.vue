@@ -13,27 +13,27 @@ import NumberPad from "../components/Money/NumberPad.vue";
 import Types from "../components/Money/Types.vue";
 import Notes from "../components/Money/Notes.vue";
 import Tags from "../components/Money/Tags.vue";
-import { Component, Watch } from "vue-property-decorator";
-import recordListModel from "../models/recordListModel";
-import tagListModel from "../models/tagListModel";
+import { Component } from "vue-property-decorator";
+import store from "../store/index2";
+// import recordListModel from "../models/recordListModel";
+// import tagListModel from "../models/tagListModel";
 
-const recordList = recordListModel.fetch();
-const tagList = tagListModel.fetch();
+// const recordList = recordListModel.fetch()
 
-type RecordItem = {
-  tags: string[];
-  notes: string;
-  type: string;
-  amount: number; //数据类型
-  createAt?: Date; // 类 /构造函数
-};
+// type RecordItem = {
+//   tags: string[];
+//   notes: string;
+//   type: string;
+//   amount: number; //数据类型
+//   createAt?: Date; // 类 /构造函数
+// };
 
 @Component({
   components: { NumberPad, Types, Notes, Tags }
 })
 export default class Money extends Vue {
-  tags = tagList;
-  recordList: RecordItem[] = recordList;
+  tags = store.tagList;
+  recordList = store.recordList;
   record: RecordItem = {
     tags: [],
     notes: "",
@@ -48,12 +48,7 @@ export default class Money extends Vue {
     this.record.notes = value;
   }
   saveRecord() {
-    recordListModel.create(this.record);
-  }
-
-  @Watch("recordList")
-  onRecordListChange() {
-    recordListModel.save();
+    store.createRecord(this.record);
   }
 }
 </script>

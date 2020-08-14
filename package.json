@@ -9,7 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@types/node": "^14.0.20",
+    "@types/node": "^14.0.27",
     "@types/webpack-env": "^1.15.2",
     "core-js": "^3.6.5",
     "register-service-worker": "^1.7.1",

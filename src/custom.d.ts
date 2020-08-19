@@ -4,7 +4,7 @@ type RecordItem = {
   notes: string;
   type: string;
   amount: number; //数据类型
-  createAt?: Date; // 类 /构造函数
+  createdAt?: Date; // 类 /构造函数
 };
 
 type Tag = {

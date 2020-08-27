@@ -18,7 +18,6 @@ import { Component } from "vue-property-decorator";
 import VueRouter from "vue-router";
 import Notes from "../components/Money/Notes.vue";
 import Button from "../components/Button.vue";
-// import store from "../store/index2";
 
 @Component({
   components: { Notes, Button }

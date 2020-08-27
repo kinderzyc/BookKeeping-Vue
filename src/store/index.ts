@@ -6,11 +6,6 @@ import router from '@/router';
 
 Vue.use(Vuex);
 
-type RootState = {
-  recordList: RecordItem[];
-  tagList: Tag[];
-  currentTag?: Tag;
-}
 const store = new Vuex.Store({
   state: {
     recordList: [],
@@ -22,7 +17,7 @@ const store = new Vuex.Store({
       state.currentTag = state.tagList.filter(t => t.id === id)[0];
     },
     updateTag(state, payload: { id: string; name: string }) {
-      const {id, name} = payload;
+      const { id, name } = payload;
       const idList = state.tagList.map(item => item.id);
       if (idList.indexOf(id) >= 0) {
         const names = state.tagList.map(item => item.name);
@@ -57,7 +52,7 @@ const store = new Vuex.Store({
     },
     createRecord(state, record) {
       const record2: RecordItem = clone(record);
-      record2.createdAt = new Date();
+      record2.createdAt = new Date().toISOString();
       state.recordList.push(record2);
       store.commit('saveRecords');
     },
@@ -72,9 +67,10 @@ const store = new Vuex.Store({
       const names = state.tagList.map(item => item.name);
       if (names.indexOf(name) >= 0) {
         window.alert('标签名重复了');
+        return "duplicated";
       }
       const id = createId().toString();
-      state.tagList.push({id, name: name});
+      state.tagList.push({ id, name: name });
       store.commit('saveTags');
       window.alert('添加成功');
     },

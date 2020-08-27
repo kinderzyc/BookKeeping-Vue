@@ -1,10 +1,15 @@
+type RootState = {
+  recordList: RecordItem[];
+  tagList: Tag[];
+  currentTag?: Tag;
+}
 
 type RecordItem = {
   tags: string[];
   notes: string;
   type: string;
   amount: number; //数据类型
-  createdAt?: Date; // 类 /构造函数
+  createdAt?: string | undefined; // 类 /构造函数
 };
 
 type Tag = {

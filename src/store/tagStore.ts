@@ -16,7 +16,7 @@ const tagStore = {
         if (names.indexOf(name) >= 0) {
             window.alert("标签重复了");
             return "duplicated";
-        }
+        } 
         const id = createId().toString();
         this.tagList.push({ id: id, name: name });
         this.saveTags();

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <router-view />
   </div>
 </template>
@@ -19,5 +19,9 @@ body {
   line-height: 1.5;
   font-family: $font-black;
   font-size: 20px;
+}
+#app {
+  max-width: 500px;
+  margin: 0 auto;
 }
 </style>

@@ -69,7 +69,6 @@ const store = new Vuex.Store({
         store.commit("createTag", "食");
         store.commit("createTag", "住");
         store.commit("createTag", "行");
-
       }
     },
     createTag(state, name: string) {

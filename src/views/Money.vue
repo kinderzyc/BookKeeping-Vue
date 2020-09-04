@@ -2,11 +2,17 @@
   <Layout class-prefix="layout">
     <NumberPad :value.sync="record.amount" @submit="saveRecord" />
     <Tabs :data-source="recordTypeList" :value.sync="record.type" />
-    <Notes
-      field-name="备注"
-      placeholder="请输入备注名"
-      :value.sync="record.notes"
-    />
+    <div class="createdAt">
+      <Notes
+        field-name="日期"
+        type="date"
+        placeholder="请输入日期"
+        :value.sync="record.createdAt"
+      />
+    </div>
+    <div class="notes">
+      <Notes field-name="备注" placeholder="请输入备注名" :value.sync="record.notes" />
+    </div>
     <Tags @update:value="record.tags = $event" />
   </Layout>
 </template>
@@ -34,7 +40,8 @@ export default class Money extends Vue {
     tags: [],
     notes: "",
     type: "-",
-    amount: 0
+    amount: 0,
+    createdAt: new Date().toISOString()
   };
 
   created() {

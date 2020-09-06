@@ -3,12 +3,7 @@
     <NumberPad :value.sync="record.amount" @submit="saveRecord" />
     <Tabs :data-source="recordTypeList" :value.sync="record.type" />
     <div class="createdAt">
-      <Notes
-        field-name="日期"
-        type="date"
-        placeholder="请输入日期"
-        :value.sync="record.createdAt"
-      />
+      <Notes field-name="日期" type="date" placeholder="请输入日期" :value.sync="record.createdAt" />
     </div>
     <div class="notes">
       <Notes field-name="备注" placeholder="请输入备注名" :value.sync="record.notes" />
@@ -26,6 +21,7 @@ import Tabs from "../components/Tabs.vue";
 import { Component } from "vue-property-decorator";
 import store from "../store/index";
 import recordTypeList from "../constants/recordTypeList";
+
 
 @Component({
   components: { NumberPad, Tabs, Notes, Tags }

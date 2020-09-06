@@ -1,25 +1,23 @@
 <template>
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
-    <!-- <Tabs class-prefix="interval" :data-source="intervalList" :value.sync="interval" /> -->
-    <div>
-      <ol v-if="groupedList.length > 0">
-        <li v-for="(group, index) in groupedList" :key="index">
-          <h3 class="title">
-            {{beautify(group.title)}}
-            <span>￥{{group.total}}</span>
-          </h3>
-          <ol>
-            <li v-for="item in group.items" :key="item.id" class="record">
-              <span>{{tagString(item.tags)}}</span>
-              <span class="notes">{{item.notes}}</span>
-              <span>￥{{item.amount}}</span>
-            </li>
-          </ol>
-        </li>
-      </ol>
-      <div v-else class="noteResult">目前没有相关记录</div>
-    </div>
+    <Chart :options="x" />
+    <ol v-if="groupedList.length > 0">
+      <li v-for="(group, index) in groupedList" :key="index">
+        <h3 class="title">
+          {{beautify(group.title)}}
+          <span>￥{{group.total}}</span>
+        </h3>
+        <ol>
+          <li v-for="item in group.items" :key="item.id" class="record">
+            <span>{{tagString(item.tags)}}</span>
+            <span class="notes">{{item.notes}}</span>
+            <span>￥{{item.amount}}</span>
+          </li>
+        </ol>
+      </li>
+    </ol>
+    <div v-else class="noteResult">目前没有相关记录</div>
   </Layout>
 </template>
 
@@ -31,9 +29,10 @@ import intervalList from "../constants/intervalList";
 import recordTypeList from "../constants/recordTypeList";
 import clone from "../lib/clone";
 import dayjs from "dayjs";
+import Chart from "@/components/Chart.vue";
 
 @Component({
-  components: { Tabs }
+  components: { Tabs, Chart }
 })
 export default class Statistics extends Vue {
   tagString(tags: Tag[]) {
@@ -53,6 +52,38 @@ export default class Statistics extends Vue {
     } else {
       return day.format("YYYY年M月D日");
     }
+  }
+
+  get x() {
+    return {
+      xAxis: {
+        type: "category",
+        data: [
+          "1", "2", "3", "4", "5", "6", "7",
+          "8", "9", "10", "11", "12", "13", "14",
+          "15", "16", "17", "18", "19", "20", "21",
+          "22", "23", "24", "25", "26", "27", "28",
+          "29", "30", "31"
+        ]
+      },
+      yAxis: {
+        type: "value"
+      },
+      tooltip: {
+        show: true,
+        triggerOn: "click"
+      },
+      series: [
+        {
+          data: [120, 200, 150, 80, 70, 110, 130],
+          type: "line",
+          showBackground: true,
+          backgroundStyle: {
+            color: "rgba(220, 220, 220, 0.8)"
+          }
+        }
+      ]
+    };
   }
 
   get recordList() {

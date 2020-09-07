@@ -1,7 +1,9 @@
 <template>
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
-    <Chart :options="x" />
+    <div class="chart-warrper" ref="chartWarrper">
+      <Chart class="chart" :options="x" />
+    </div>
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">
@@ -38,6 +40,11 @@ export default class Statistics extends Vue {
   tagString(tags: Tag[]) {
     return tags.length === 0 ? "无" : tags.map(t => t.name).join("，");
   }
+
+mounted(){
+  (this.$refs.chartWarrper as HTMLDivElement).scrollLeft = 9999;
+}
+
   beautify(string: string) {
     const day = dayjs(string);
     const now = dayjs();
@@ -56,6 +63,10 @@ export default class Statistics extends Vue {
 
   get x() {
     return {
+      grid:{
+        left:0,
+        right:0
+      },
       xAxis: {
         type: "category",
         data: [
@@ -64,18 +75,26 @@ export default class Statistics extends Vue {
           "15", "16", "17", "18", "19", "20", "21",
           "22", "23", "24", "25", "26", "27", "28",
           "29", "30", "31"
-        ]
+        ],
+        axisTick: {alignWithLabel: true},
+        axisLine: {lineStyle: {color: "#666"}}
       },
       yAxis: {
-        type: "value"
+        type: "value",
+        show:  false
       },
       tooltip: {
         show: true,
-        triggerOn: "click"
+        triggerOn: "click",
+        position:"top",
+        formatter: "{c}"
       },
       series: [
         {
-          data: [120, 200, 150, 80, 70, 110, 130],
+          symbol: "circle",
+          symbolSize: 15,
+          itemStyle: {borderWidth:1, color: "#666"},
+          data: [120, 200, 300, 600, 800,1,2],
           type: "line",
           showBackground: true,
           backgroundStyle: {
@@ -139,6 +158,10 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.echarts {
+    max-width: 100%;
+    height: 400px;
+  }
 .noteResult {
   padding: 16px;
   text-align: center;
@@ -176,6 +199,15 @@ export default class Statistics extends Vue {
   margin-right: auto;
   margin-left: 26px;
   color: #999;
+}
+.chart{
+  width: 430%;
+}
+.chart-warrper{
+  overflow: auto;
+  &::-webkit-scrollbar{
+    display: none;
+  }
 }
 </style>
 

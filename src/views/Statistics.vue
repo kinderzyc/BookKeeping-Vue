@@ -2,7 +2,7 @@
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
     <div class="chart-warrper" ref="chartWarrper">
-      <Chart class="chart" :options="x" />
+      <Chart class="chart" :options="chartOptions" />
     </div>
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
@@ -74,14 +74,14 @@ export default class Statistics extends Vue {
         .format("YYYY-MM-DD");
       const found = _.find(this.recordList, { createdAt: dateString });
       array.push({
-        date: dateString,
+        key: dateString,
         value: found ? found.amount : 0
       });
     }
     array.sort((a, b) => {
-      if (a.date > b.date) {
+      if (a.key > b.key) {
         return 1;
-      } else if (a.date === b.date) {
+      } else if (a.key === b.key) {
         return 0;
       } else {
         return -1;
@@ -90,8 +90,8 @@ export default class Statistics extends Vue {
     return array;
   }
 
-  get x() {
-    const keys = this.keyValueList.map(item => item.date);
+  get chartOptions() {
+    const keys = this.keyValueList.map(item => item.key);
     const values = this.keyValueList.map(item => item.value);
 
     return {
@@ -103,7 +103,12 @@ export default class Statistics extends Vue {
         type: "category",
         data: keys,
         axisTick: { alignWithLabel: true },
-        axisLine: { lineStyle: { color: "#666" } }
+        axisLine: { lineStyle: { color: "#666" } },
+         axisLabel: {
+            formatter: function (value: string, index: number) {
+              return value.substr(5);
+            }
+          }
       },
       yAxis: {
         type: "value",

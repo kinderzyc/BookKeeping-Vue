@@ -32,6 +32,8 @@ import recordTypeList from "../constants/recordTypeList";
 import clone from "../lib/clone";
 import dayjs from "dayjs";
 import Chart from "@/components/Chart.vue";
+import _ from "lodash";
+import day from "dayjs";
 
 @Component({
   components: { Tabs, Chart }
@@ -41,9 +43,10 @@ export default class Statistics extends Vue {
     return tags.length === 0 ? "无" : tags.map(t => t.name).join("，");
   }
 
-mounted(){
-  (this.$refs.chartWarrper as HTMLDivElement).scrollLeft = 9999;
-}
+  mounted() {
+    const div = this.$refs.chartWarrper as HTMLDivElement;
+    div.scrollLeft = div.scrollWidth;
+  }
 
   beautify(string: string) {
     const day = dayjs(string);
@@ -61,40 +64,63 @@ mounted(){
     }
   }
 
+  get keyValueList() {
+    const today = new Date();
+    const array = [];
+    for (let i = 0; i <= 29; i++) {
+      // this.recordList = [{date:7.3, value:100}, {date:7.2, value:200}]
+      const dateString = day(today)
+        .subtract(i, "day")
+        .format("YYYY-MM-DD");
+      const found = _.find(this.recordList, { createdAt: dateString });
+      array.push({
+        date: dateString,
+        value: found ? found.amount : 0
+      });
+    }
+    array.sort((a, b) => {
+      if (a.date > b.date) {
+        return 1;
+      } else if (a.date === b.date) {
+        return 0;
+      } else {
+        return -1;
+      }
+    });
+    return array;
+  }
+
   get x() {
+    const keys = this.keyValueList.map(item => item.date);
+    const values = this.keyValueList.map(item => item.value);
+
     return {
-      grid:{
-        left:0,
-        right:0
+      grid: {
+        left: 0,
+        right: 0
       },
       xAxis: {
         type: "category",
-        data: [
-          "1", "2", "3", "4", "5", "6", "7",
-          "8", "9", "10", "11", "12", "13", "14",
-          "15", "16", "17", "18", "19", "20", "21",
-          "22", "23", "24", "25", "26", "27", "28",
-          "29", "30", "31"
-        ],
-        axisTick: {alignWithLabel: true},
-        axisLine: {lineStyle: {color: "#666"}}
+        data: keys,
+        axisTick: { alignWithLabel: true },
+        axisLine: { lineStyle: { color: "#666" } }
       },
       yAxis: {
         type: "value",
-        show:  false
+        show: false
       },
       tooltip: {
         show: true,
         triggerOn: "click",
-        position:"top",
+        position: "top",
         formatter: "{c}"
       },
       series: [
         {
           symbol: "circle",
           symbolSize: 15,
-          itemStyle: {borderWidth:1, color: "#666"},
-          data: [120, 200, 300, 600, 800,1,2],
+          itemStyle: { borderWidth: 1, color: "#666" },
+          data: values,
           type: "line",
           showBackground: true,
           backgroundStyle: {
@@ -159,9 +185,9 @@ mounted(){
 
 <style lang="scss" scoped>
 .echarts {
-    max-width: 100%;
-    height: 400px;
-  }
+  max-width: 100%;
+  height: 400px;
+}
 .noteResult {
   padding: 16px;
   text-align: center;
@@ -200,12 +226,12 @@ mounted(){
   margin-left: 26px;
   color: #999;
 }
-.chart{
+.chart {
   width: 430%;
 }
-.chart-warrper{
+.chart-warrper {
   overflow: auto;
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     display: none;
   }
 }

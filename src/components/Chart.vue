@@ -5,11 +5,11 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
-import echarts, { EchartOption } from "echarts";
+import echarts, {EChartOption} from 'echarts';
 
 @Component
 export default class Chart extends Vue {
-  @Prop() options?: EchartOption;
+  @Prop() options?: EChartOption;
 
   mounted() {
     if (this.options === undefined) {
